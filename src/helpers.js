@@ -12,7 +12,7 @@ const helpers = {
         }
 
         try {
-            const res = await axios.get(url);  // Aguarda a resposta da chamada.
+            const res = await axios.get(url + "gateway");  // Aguarda a resposta da chamada.
             return res.data;
         } catch (error) {
             console.log("Erro ao obter resposta");
@@ -30,7 +30,25 @@ const helpers = {
         }
 
         try {
-            const res = await axios.get(`${url}/withdraw`);  // Aguarda a resposta da chamada.
+            const res = await axios.get(`${url}gateway/withdraw`);
+            return res.data;
+        } catch (error) {
+            console.log("Erro ao obter resposta");
+            console.log(error);
+            return null;
+        }
+    },
+
+    getAdminWithdrawals: async (client) => {
+        const url = helpers.handleClientURL(client);
+
+        if (!url) {
+            console.log("url inválida")
+            return null;
+        }
+
+        try {
+            const res = await axios.get(`${url}gateway/adminwithdraw`);  // Aguarda a resposta da chamada.
             return res.data;
         } catch (error) {
             console.log("Erro ao obter resposta");
@@ -77,7 +95,25 @@ const helpers = {
         }
 
         try {
-            const res = await axios.put(`${process.env.REACT_APP_EDIT_WITHDRAW}${id}/${newStatus}`);
+            const res = await axios.put(`${process.env.REACT_APP_URL_PLATAFORMA_OSCAR}withdrawal/${id}/${newStatus}`);
+            console.log(res);
+            if (res.status === 204)
+                return true;
+            else return false;
+        } catch (error) {
+            console.log("Erro ao editar status do saque.")
+            return false;
+        }
+    },
+
+    editarStatusSaqueAdmin: async (id, newStatus) => {
+        if (!id || !newStatus) {
+            console.log("Erro ao atualizar status do saque.");
+            return;
+        }
+
+        try {
+            const res = await axios.put(`${process.env.REACT_APP_URL_PLATAFORMA_OSCAR}adminwithdrawal/${id}/${newStatus}`);
             console.log(res);
             if (res.status === 204)
                 return true;

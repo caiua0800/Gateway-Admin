@@ -5,6 +5,7 @@ import helpers from "../../helpers";
 
 export default function ClientSaquesModel() {
     const [saquesClientesData, setSaquesClientesData] = useState(null);
+    const [saquesAdminData, setSaquesAdminData] = useState(null);
     const [loadStatus, setLoadStatus] = useState(false);
     const [erro, setErro] = useState(false);
     const [tipoDoSaque, setTipoDoSaque] = useState("doAdmin");
@@ -19,8 +20,13 @@ export default function ClientSaquesModel() {
 
         helpers.getClientWithdrawals("Oscar").then(res => {
             setSaquesClientesData(res);
+        }).catch(err => {
+            console.log(err);
+            setErro(true);
+        });
 
-            console.log(res)
+        helpers.getAdminWithdrawals("Oscar").then(res => {
+            setSaquesAdminData(res);
         }).catch(err => {
             console.log(err);
             setErro(true);
@@ -36,18 +42,22 @@ export default function ClientSaquesModel() {
     }, []);
 
     const handleEditStatus = async (newStatus) => {
-        if(selectedWithdraw && newStatus){
+        if (selectedWithdraw && newStatus) {
             setLoadStatus(true)
-            const res = await helpers.editarStatusSaque(selectedWithdraw, newStatus);
+            var res = null;
+            if (tipoDoSaque === "dosClientes")
+                res = await helpers.editarStatusSaque(selectedWithdraw, newStatus);
+            else
+                res = await helpers.editarStatusSaqueAdmin(selectedWithdraw, newStatus);
 
             setTimeout(() => {
                 setLoadStatus(false);
-            },2000);
+            }, 2000);
 
-            if(res){
+            if (res) {
                 alert("Saque atualizado com sucesso.");
                 await fatchData();
-            }else{
+            } else {
                 alert("Erro ao atualizar o saque.");
             }
             setSelectedWithdraw(null);
@@ -76,7 +86,7 @@ export default function ClientSaquesModel() {
                 </S.SelecionarTipo>
 
 
-                {tipoDoSaque === "dosClientes" && (
+                {tipoDoSaque === "dosClientes" ? (
                     <S.TabelaDeSaques>
                         {loadStatus ? (
                             <Loading status={true} />
@@ -107,6 +117,37 @@ export default function ClientSaquesModel() {
                             </S.Tabela>
                         )}
                     </S.TabelaDeSaques>
+                ) : (
+                    <>
+                        <S.TabelaDeSaques>
+                            {loadStatus ? (
+                                <Loading status={true} />
+                            ) : (
+                                <S.Tabela>
+                                    <thead>
+                                        <tr>
+                                            <S.Th>ID</S.Th>
+                                            <S.Th>DATA</S.Th>
+                                            <S.Th>VALOR SOLICITADO</S.Th>
+                                            <S.Th>VALOR RECEBÍVEL</S.Th>
+                                            <S.Th>STATUS</S.Th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {saquesAdminData && saquesAdminData.map(saque => (
+                                            <tr key={saque.adminWithdrawalId} onClick={() => setSelectedWithdraw(saque.adminWithdrawalId)}>
+                                                <S.Td>{saque.adminWithdrawalId}</S.Td>
+                                                <S.Td>{helpers.formatarData(saque.dateCreated)}</S.Td>
+                                                <S.Td>R${helpers.formatarNumero(saque.amountWithdrawn)}</S.Td>
+                                                <S.Td>R${helpers.formatarNumero(saque.amountWithdrawn * 0.975)}</S.Td>
+                                                <S.Td>{helpers.handleStatus(saque.status)}</S.Td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </S.Tabela>
+                            )}
+                        </S.TabelaDeSaques>
+                    </>
                 )}
 
 

@@ -80,6 +80,29 @@ const Circle = styled.div`
     
 `;
 
+const CircleImage = styled.div`
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    border-radius: 50%;
+    left: ${({ index }) => (index === 1 ? '15%' : index === 2 ? '45%' : 'auto')};
+    right: ${({ index }) => (index === 3 ? '15%' : 'auto')};
+    transform-origin: 50%;
+    animation: ${circleAnimation} .4s alternate infinite ease;
+    animation-delay: ${({ index }) => (index === 2 ? '.2s' : index === 3 ? '.3s' : '0s')};
+
+    display: flex;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    img{
+      width: 100%;
+    }
+    // border: 1px solid white;
+    
+`;
+
 const Shadow = styled.div`
     width: 20px;
     height: 4px;
@@ -109,23 +132,23 @@ const Text = styled.span`
 
 export default function Loading({ status }) {
 
-    if (!status)
-        return null;
+  if (!status)
+    return null;
 
-    return (
-        <LoadContainer>
-            <Wrapper>
-                {[1, 2, 3].map(index => (
-                    <Circle key={`circle-${index}`} index={index} >
-                    </Circle>
-                ))}
-                {[1, 2, 3].map(index => (
-                    <Shadow key={`shadow-${index}`} index={index} />
-                ))}
-            </Wrapper>
-            <Text>Carregando</Text>
-
-        </LoadContainer>
-
-    );
+  return (
+    <LoadContainer>
+      <Wrapper>
+        {[1, 2, 3].map(index => (
+          <CircleImage key={`circle-${index}`} index={index}>
+            <img alt="ursinho rosa"
+              src={index === 1 ? `./icons/bixinho-pelucia-rosa.png` : index === 2 ? `./icons/bixinho-pelucia-marrom.png` : `./icons/bixinho-pelucia-amarelinho.png`} />
+          </CircleImage>
+        ))}
+        {[1, 2, 3].map(index => (
+          <Shadow key={`shadow-${index}`} index={index} />
+        ))}
+      </Wrapper>
+      <Text>Carregando</Text>
+    </LoadContainer>
+  )
 }

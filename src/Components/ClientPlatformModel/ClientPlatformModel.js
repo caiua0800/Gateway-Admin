@@ -9,16 +9,17 @@ export default function ClientPlatformModel({ plataforma }) {
     const [erro, setErro] = useState(false);
 
     const fetchData = async () => {
-        setLoadStatus(true); // Mova isso para aqui para refletir a mudança enquanto os dados carregam
+        setLoadStatus(true); 
         let data = await helpers.getPlatformInfo(plataforma);
         if (data === null) {
             console.log("Nenhum dado retornado.");
             setErro(true);
-            setLoadStatus(false);
         } else {
             setPlataformaData(data);
-            setLoadStatus(false);
         }
+        setTimeout(() => {
+            setLoadStatus(false);
+        },1200);
     };
 
     useEffect(() => {

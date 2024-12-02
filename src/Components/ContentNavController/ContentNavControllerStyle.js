@@ -30,6 +30,10 @@ export const SelectedNavTitle = styled.div`
     h1{
         width: 100%;
         margin: 0;
+        min-height: 70px;
+        align-items: center;
+        display: flex;
+        justify-content: center;
         background: rgba(10, 10, 10, 0.05);
         border: 1px solid rgba(30, 30, 30, 0.2);
         font-weight: 500;
