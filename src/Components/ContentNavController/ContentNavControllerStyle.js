@@ -18,6 +18,7 @@ export const NavSection = styled.div`
 export const ActualTabContainer = styled.div`
     width: 100%;
     height: 100%;
+    position: relative;
 `;
 
 export const SelectedNavTitle = styled.div`
@@ -29,7 +30,7 @@ export const SelectedNavTitle = styled.div`
     h1{
         width: 100%;
         margin: 0;
-        background: rgba(10, 10, 10, 0.1);
+        background: rgba(10, 10, 10, 0.05);
         border: 1px solid rgba(30, 30, 30, 0.2);
         font-weight: 500;
         font-size: 16px;

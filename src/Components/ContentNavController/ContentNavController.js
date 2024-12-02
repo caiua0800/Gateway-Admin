@@ -1,44 +1,63 @@
 import React, { useState } from "react";
 import * as S from "./ContentNavControllerStyle";
+import ClientPlatformModel from "../ClientPlatformModel/ClientPlatformModel";
+import ClientSaquesModel from "../ClientSaquesModel/ClientSaquesModel";
 
 
-export default function ContentNavController() {
+export default function ContentNavController({ navbarSelected }) {
+    const [platformSelected, setPlatformSelected] = useState("Oscar");
 
+    const handleReturnIfSelected = (nome) => {
+        if (nome === platformSelected)
+            return "selected";
+        return "";
+    }
 
     return (
-        <S.ContainerNavControllerContent>
-            <S.NavSection>
-                <S.SelectedNavTitle><h1>GERENCIAMENTO DE PLATAFORMAS</h1></S.SelectedNavTitle>
+        <>
+            {navbarSelected === "01" && (
+                <S.ContainerNavControllerContent>
+                    <S.NavSection>
+                        <S.SelectedNavTitle><h1>GERENCIAMENTO DE PLATAFORMAS</h1></S.SelectedNavTitle>
 
-                <S.Subtitle>NOSSAS PLATAFORMAS</S.Subtitle>
-                <S.SubSubtitle>INTEGRADAS</S.SubSubtitle>
+                        <S.Subtitle>NOSSAS PLATAFORMAS</S.Subtitle>
+                        <S.SubSubtitle>INTEGRADAS</S.SubSubtitle>
 
-                <S.PlatformsContainer>
-                    <S.PlatformItem>
-                        <span className="name selected">OSCAR</span>
-                    </S.PlatformItem>
-                    <S.PlatformItem>
-                        <span className="name">GOLDEN</span>
-                    </S.PlatformItem>
-                    <S.PlatformItem>
-                        <span className="name">FERNANDO</span>
-                    </S.PlatformItem>
-                    <S.PlatformItem>
-                        <span className="name">CLÁUDIO MINISTER</span>
-                    </S.PlatformItem>
-                    <S.PlatformItem>
-                        <span className="name">SEBASTIAN FERRER</span>
-                    </S.PlatformItem>
-                    <S.PlatformItem>
-                        <span className="name">EDGAR BRANDÃO</span>
-                    </S.PlatformItem>
-                </S.PlatformsContainer>
-                
-            </S.NavSection>
+                        <S.PlatformsContainer>
+                            <S.PlatformItem>
+                                <span className={`name ${handleReturnIfSelected("Oscar")}`}>OSCAR</span>
+                            </S.PlatformItem>
+                        </S.PlatformsContainer>
+                    </S.NavSection>
 
-            <S.ActualTabContainer>
+                    <S.ActualTabContainer>
+                        <ClientPlatformModel plataforma="Oscar" />
+                    </S.ActualTabContainer>
+                </S.ContainerNavControllerContent>
+            )}
 
-            </S.ActualTabContainer> 
-        </S.ContainerNavControllerContent>
+            {navbarSelected === "02" && (
+                <S.ContainerNavControllerContent>
+                    <S.NavSection>
+                        <S.SelectedNavTitle><h1>GERENCIAMENTO DE SAQUES</h1></S.SelectedNavTitle>
+
+                        <S.Subtitle>NOSSAS PLATAFORMAS</S.Subtitle>
+                        <S.SubSubtitle>INTEGRADAS</S.SubSubtitle>
+
+                        <S.PlatformsContainer>
+                            <S.PlatformItem>
+                                <span className={`name ${handleReturnIfSelected("Oscar")}`}>OSCAR</span>
+                            </S.PlatformItem>
+                        </S.PlatformsContainer>
+                    </S.NavSection>
+
+                    <S.ActualTabContainer>
+                        <ClientSaquesModel plataforma="Oscar" />
+                    </S.ActualTabContainer>
+                </S.ContainerNavControllerContent>
+            )}
+
+        </>
+
     )
 }

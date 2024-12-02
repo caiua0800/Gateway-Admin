@@ -10,7 +10,7 @@ export const NavbarContainer = styled.div`
     top: 0;
     left: 0;
     filter: drop-shadow(0px 0px 10px rgba(0,0,0,0.4));
-
+    z-index: 9;
     display: grid;
     grid-template-columns: 3fr 6fr 3fr;
 `;
