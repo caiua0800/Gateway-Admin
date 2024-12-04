@@ -39,7 +39,7 @@ const LoadContainer = styled.div`
     align-items: center;
     justify-content: center;
     boz-sizing: border-box;
-    position: absolute;
+    position: fixed;
     left: 0;
     // background: rgba(0,0,0,0.4);
     background: linear-gradient(-45deg, rgba(180, 180, 180, 1), rgba(255, 255, 255, 1));

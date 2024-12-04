@@ -1,19 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import * as S from "./NavbarStyle";
+import helpers from "../../helpers";
 
 export default function Navbar({ setNavbarSelected, navbarSelected }) {
 
+    const [platformData, setPlatformData] = useState(null);
+
     const handleReturnSelected = (it) => {
-        if(it === navbarSelected)
+        if (it === navbarSelected)
             return true;
         else return false;
     }
 
     const handleChange = (it) => {
-        if(it != navbarSelected){
+        if (it != navbarSelected) {
             setNavbarSelected(it);
         }
     }
+
+    useEffect(() => {
+        if (!platformData) {
+            helpers.getPlatformInfo("Oscar").then(resposta => {
+                console.log(resposta)
+                setPlatformData(resposta);
+            }).catch(error => {
+                console.log(error);
+            });
+        }
+    })
+
+    const meuGanho = platformData ? ((platformData.totalAmountWithdrawn * 0.025) / 2) : 0;
 
     return (
         <S.NavbarContainer>
@@ -26,10 +42,9 @@ export default function Navbar({ setNavbarSelected, navbarSelected }) {
             </S.Nav>
 
             <S.UserArea>
-                <div className="seusGanhos">SEUS GANHOS</div>
+                <div className="seusGanhos"><span style={{fontWeight: "500"}}>SEUS GANHOS:</span> <span style={{fontWeight: "600", color: "rgba(60, 100, 0, 1)"}}>R${helpers.formatarNumero(meuGanho)}</span></div>
                 <div className="perfil">
-                    <div className="profilePicture"></div>
-                    <span className="accountName">SUA CONTA</span>
+                    <span className="accountName">SAIR</span>
                 </div>
             </S.UserArea>
         </S.NavbarContainer>

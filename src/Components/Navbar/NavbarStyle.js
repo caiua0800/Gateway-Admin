@@ -92,20 +92,32 @@ export const UserArea = styled.div`
         display: flex;
         gap: 10px;
         align-items: center;
+        justify-content: center;
 
         .profilePicture{
             width: 40px;
             height: 40px;
-            border-radius: 50%;
-            filter: drop-shadow(0 0 5px rgba(0,0,0,0.8));
-            box-shadow: 1px 1px 1px rgba(0,0,0,0.4);
-            background: rgba(0,0,0,0.1);
+            // border-radius: 50%;
+            // filter: drop-shadow(0 0 5px rgba(0,0,0,0.8));
+            // box-shadow: 1px 1px 1px rgba(0,0,0,0.4);
+            background: rgba(255,255,255,0.8);
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-sizing: border-box;
+
+            img{
+                width: 30px;
+            }
         }
 
         .accountName{
-            font-size: 12px;
-            color: black
+            font-size: 18px;
+            color: red;
+            font-weight: 600;
+            cursor: pointer;
             width: max-content;
         }
     }

@@ -30,7 +30,7 @@ const helpers = {
         }
 
         try {
-            const res = await axios.get(`${url}gateway/withdraw`);
+            const res = await axios.get(`${url}gateway/withdraw/pending`);
             return res.data;
         } catch (error) {
             console.log("Erro ao obter resposta");
@@ -48,7 +48,43 @@ const helpers = {
         }
 
         try {
-            const res = await axios.get(`${url}gateway/adminwithdraw`);  // Aguarda a resposta da chamada.
+            const res = await axios.get(`${url}gateway/adminwithdraw/pending`);  // Aguarda a resposta da chamada.
+            return res.data;
+        } catch (error) {
+            console.log("Erro ao obter resposta");
+            console.log(error);
+            return null;
+        }
+    },
+
+    getAllClientWithdrawals: async (client) => {
+        const url = helpers.handleClientURL(client);
+
+        if (!url) {
+            console.log("url inválida")
+            return null;
+        }
+
+        try {
+            const res = await axios.get(`${url}gateway/withdraw/paid`);
+            return res.data;
+        } catch (error) {
+            console.log("Erro ao obter resposta");
+            console.log(error);
+            return null;
+        }
+    },
+
+    getAllAdminWithdrawals: async (client) => {
+        const url = helpers.handleClientURL(client);
+
+        if (!url) {
+            console.log("url inválida")
+            return null;
+        }
+
+        try {
+            const res = await axios.get(`${url}gateway/adminwithdraw/paid`);  // Aguarda a resposta da chamada.
             return res.data;
         } catch (error) {
             console.log("Erro ao obter resposta");
